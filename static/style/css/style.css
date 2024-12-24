@@ -1,0 +1,17 @@
+.carousel-control-prev,
+.carousel-control-next {
+    width: 50px; /* Width ko adjust karein, default se choti */
+    height: auto; /* Height ko automatic adjust hone dein */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 30px; /* Arrow icons ki width kam karein */
+    height: 30px;
+    background-size: 100%; /* Icons ko size ke mutabiq adjust karein */
+}
+
+.custom-carousel-btn {
+    width: 100px; /* Reduced width */
+    height: auto;
+}

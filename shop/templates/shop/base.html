@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'layout/bootstrap/css/b.css' %}">
+    <link rel="stylesheet" href="{% static 'style/css/style.css' %}">
+    <title>My Aowesome Cart | {% block title %}{% endblock %}</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'shop_index' %}">My Aowesome Cart</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'shop_index' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'about_us' %}">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'tracking_status' %}">Tracker</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'contact_us' %}">Contact Us</a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+            <button type="button"
+                    data-checkout-url="{% url 'check_out' %}"
+                    class="btn btn-info mx-3"
+                    id="popcart"
+                    data-bs-container="body"
+                    data-bs-toggle="popover"
+                    data-bs-placement="bottom"
+                    data-html="true"
+                    data-bs-content="Initial popover content">
+                    Cart(<span id="cart">0</span>)
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+    {% block content %}{% endblock %}
+    <script src="{% static 'layout/bootstrap/js/b.js' %}"></script>
+    <script src="{% static 'layout/js/jquery.js' %}"></script>
+    <script src="{% static 'layout/js/ajax.js' %}"></script>
+    <script src="{% static 'style/js/script.js' %}"></script>
+</body>
+</html>

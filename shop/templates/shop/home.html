@@ -1,0 +1,52 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %} Home {% endblock %}
+
+{% block content %}
+    {% for product_group in all_products %}
+    <div id="carouselExampleIndicators{{ forloop.counter }}" class="carousel slide">
+    <div id="carouselExampleIndicators{{ forloop.counter }}" class="carousel slide container mt-3" data-bs-ride="carousel">
+      <h4 class="bg-light mt-4">Flash Sale On {{ product_group.category }} - Recommended Items</h4>
+      <div class="carousel-indicators m-auto">
+        <button type="button" data-bs-target="#carouselExampleIndicators{{ forloop.counter }}" data-bs-slide-to="0" class="active bg-dark" aria-current="true" aria-label="Slide 1"></button>
+        {% for range in product_group.slides_range %}
+          <button type="button" data-bs-target="#carouselExampleIndicators{{ forloop.counter }}" data-bs-slide-to="{{ range }}" class="bg-dark" aria-label="Slide {{ range }}"></button>
+        {% endfor %}
+      </div>
+      <div class="carousel-inner">
+          {% for batch in product_group.batches %}
+              <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                  <div class="row">
+                      {% for product in batch %}
+                          <div class="col-xs-3 col-sm-3 col-md-3">
+                              <div class="card h-100">
+                                  <img src="{{ product.image.url }}" id="imgpr{{ product.id }}" class="card-img-top" height="200" alt="...">
+                                  <div class="card-body">
+                                      <h5 class="card-title text-primary" id="namepr{{ product.id }}">{{ product.product_name }}</h5>
+                                      <p class="card-title text-success"><strong  id="pricepr{{ product.id }}">Rs. {{ product.discount_price }} <span class="text-dark">-</span> <del class="text-danger">Rs. {{ product.price }}</del></strong></p>
+                                      <p class="card-title">{{ product.category }}... {{ product.sub_category }}</p>
+                                      <p class="card-text">{{ product.desc|slice:"0:50" }}....</p>
+                                      <span class="divpr" id="divpr{{ product.id }}">
+                                      <button id='pr{{ product.id }}' class="btn btn-primary cart">Add To Cart</button>
+                                      </span>
+                                      <a href="{% url 'product_view' product.id %}" id='pv{{ product.id }}' class="btn btn-warning cart">View</a>
+                                  </div>
+                              </div>
+                          </div>
+                      {% endfor %}
+                  </div>
+              </div>
+          {% endfor %}
+      </div>
+    </div>
+    <button class="carousel-control-prev custom-carousel-btn" type="button" data-bs-target="#carouselExampleIndicators{{ forloop.counter }}" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next custom-carousel-btn" type="button" data-bs-target="#carouselExampleIndicators{{ forloop.counter }}" data-bs-slide="next">
+    <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+    </button>
+    </div>
+    {% endfor %}
+{% endblock %}
