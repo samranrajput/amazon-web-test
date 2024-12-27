@@ -1,7 +1,9 @@
 from django.shortcuts import render, HttpResponse, redirect
+from math import ceil
+import json
 from .models import *
 from .forms import *
-from math import ceil
+
 
 def index(request):
     all_products = []
@@ -32,14 +34,40 @@ def contact(request):
     return render(request, 'shop/contact.html',locals())
 
 def tracker(request):
+    if request.method=="POST":
+        orderId = request.POST.get('orderId', '')
+        email = request.POST.get('email', '')
+        # return HttpResponse(orderId, email)
+        try:
+            order = Order.objects.filter(order_id=orderId, email=email)
+            if len(order)>0:
+                update = Track.objects.filter(order_id=orderId)
+                updates = []
+                for item in update:
+                    updates.append({'text': item.update_desc, 'time': item.timestamp})
+                    response = json.dumps([updates, order[0].items_json], default=str)
+                return HttpResponse(response)
+            else:
+                return HttpResponse('{}')
+        except Exception as e:
+            return HttpResponse('{}')
     return render(request, 'shop/tracker.html')
 
 def search(request):
-    return render(request, 'shop/search.html')
+    return render(request, 'shop/search.html', locals())
 
 def productView(request,id):
     product_view = Product.objects.filter(id=id)[0]
     return render(request, 'shop/product_view.html',locals())
 
 def checkOut(request):
-    return render(request, 'shop/check_out.html')
+    form = OrderForm()
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            thank = True
+            order = form.save()
+            id = order.order_id
+            update= Track(order_id= order.order_id, update_desc="The order has been placed")
+            update.save()  
+    return render(request, 'shop/check_out.html', locals())

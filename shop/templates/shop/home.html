@@ -23,7 +23,7 @@
                                   <img src="{{ product.image.url }}" id="imgpr{{ product.id }}" class="card-img-top" height="200" alt="...">
                                   <div class="card-body">
                                       <h5 class="card-title text-primary" id="namepr{{ product.id }}">{{ product.product_name }}</h5>
-                                      <p class="card-title text-success"><strong  id="pricepr{{ product.id }}">Rs. {{ product.discount_price }} <span class="text-dark">-</span> <del class="text-danger">Rs. {{ product.price }}</del></strong></p>
+                                      <p class="card-title text-success"><strong  id="dispricepr{{ product.id }}">Rs. {{ product.discount_price }} <span class="text-dark">-</span> <del id="pricepr{{ product.id }}" class="text-danger">Rs. {{ product.price }}</del></strong></p>
                                       <p class="card-title">{{ product.category }}... {{ product.sub_category }}</p>
                                       <p class="card-text">{{ product.desc|slice:"0:50" }}....</p>
                                       <span class="divpr" id="divpr{{ product.id }}">
